@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Metaroscope</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-gray: #e2e8f0;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent-gradient: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+            --hover-bg: #edf2f7;
+            --button-bg: #1a202c;
+            --button-text: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2d3748;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-input {
+            letter-spacing: 0.2em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- Écran de connexion -->
+    <div id="login-screen" class="login-container">
+        <div class="glass-card p-8 max-w-md w-full">
+            <h1 class="text-2xl font-bold text-center mb-6">Admin Metaroscope</h1>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Mot de passe admin</label>
+                <input type="password" id="admin-password" class="w-full px-3 py-2 border border-gray-300 rounded-md password-input" placeholder="Entrez le mot de passe">
+            </div>
+            <button id="login-btn" class="btn-primary w-full">Se connecter</button>
+            <p id="login-error" class="text-red-500 text-sm mt-2 hidden">Mot de passe incorrect</p>
+        </div>
+    </div>
+
+    <!-- Interface Admin (cachée par défaut) -->
+    <div id="admin-interface" class="hidden">
+        <!-- Header Admin -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Admin Metaroscope</h1>
+                    <div class="flex items-center gap-4">
+                        <span id="admin-status" class="text-sm text-gray-600"></span>
+                        <button id="logout-btn" class="btn-secondary text-sm">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-gray-50 border-b">
+            <div class="container mx-auto px-4">
+                <div class="flex space-x-8">
+                    <button class="nav-tab active" data-tab="products">Produits</button>
+                    <button class="nav-tab" data-tab="announcements">Annonces</button>
+                    <button class="nav-tab" data-tab="stats">Statistiques</button>
+                    <button class="nav-tab" data-tab="settings">Paramètres</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Onglet Produits -->
+            <div id="products-tab" class="tab-content active">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Gestion des Produits</h2>
+                    <button id="add-product-btn" class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>Ajouter un produit
+                    </button>
+                </div>
+
+                <!-- Filtres produits -->
+                <div class="glass-card p-4 mb-6">
+                    <div class="flex flex-wrap gap-4">
+                        <select id="product-type-filter" class="px-3 py-2 border rounded">
+                            <option value="all">Tous les types</option>
+                            <option value="ebook">Ebooks</option>
+                            <option value="template">Templates</option>
+                        </select>
+                        <select id="product-section-filter" class="px-3 py-2 border rounded">
+                            <option value="all">Toutes les sections</option>
+                            <option value="normal">Normal</option>
+                            <option value="dollar">Offre 1€</option>
+                        </select>
+                        <input type="text" id="product-search" placeholder="Rechercher..." class="px-3 py-2 border rounded">
+                    </div>
+                </div>
+
+                <!-- Liste des produits -->
+                <div class="grid gap-6" id="products-list">
+                    <!-- Produits chargés dynamiquement -->
+                </div>
+            </div>
+
+            <!-- Onglet Annonces -->
+            <div id="announcements-tab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Gestion des Annonces</h2>
+                    <button id="add-announcement-btn" class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>Nouvelle annonce
+                    </button>
+                </div>
+
+                <div class="grid gap-6" id="announcements-list">
+                    <!-- Annonces chargées dynamiquement -->
+                </div>
+            </div>
+
+            <!-- Onglet Statistiques -->
+            <div id="stats-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-6">Statistiques</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold" id="total-products">0</div>
+                        <div class="text-gray-600">Produits total</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold" id="active-announcements">0</div>
+                        <div class="text-gray-600">Annonces actives</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold" id="categories-count">0</div>
+                        <div class="text-gray-600">Catégories</div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 mt-6">
+                    <h3 class="text-lg font-bold mb-4">Répartition par catégorie</h3>
+                    <div id="categories-chart">
+                        <!-- Graphique catégories -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Paramètres -->
+            <div id="settings-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-6">Paramètres</h2>
+                
+                <div class="glass-card p-6 mb-6">
+                    <h3 class="text-lg font-bold mb-4">Export/Import</h3>
+                    <div class="flex gap-4">
+                        <button id="export-products-btn" class="btn-secondary">
+                            <i class="fas fa-download mr-2"></i>Exporter produits
+                        </button>
+                        <button id="export-announcements-btn" class="btn-secondary">
+                            <i class="fas fa-download mr-2"></i>Exporter annonces
+                        </button>
+                        <label class="btn-primary cursor-pointer">
+                            <i class="fas fa-upload mr-2"></i>Importer JSON
+                            <input type="file" id="import-file" class="hidden" accept=".json">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-bold mb-4">Configuration GitHub</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Repository</label>
+                            <input type="text" id="github-repo" class="w-full px-3 py-2 border rounded" placeholder="utilisateur/repo">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Token GitHub</label>
+                            <input type="password" id="github-token" class="w-full px-3 py-2 border rounded" placeholder="ghp_...">
+                        </div>
+                        <button id="save-github-btn" class="btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Modal Produit -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-90vh overflow-y-auto">
+            <h3 class="text-xl font-bold mb-4" id="product-modal-title">Nouveau produit</h3>
+            <form id="product-form" class="space-y-4">
+                <input type="hidden" id="product-id">
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Titre *</label>
+                        <input type="text" id="product-title" class="w-full px-3 py-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Type *</label>
+                        <select id="product-type" class="w-full px-3 py-2 border rounded" required>
+                            <option value="ebook">Ebook</option>
+                            <option value="template">Template</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Description *</label>
+                    <textarea id="product-description" class="w-full px-3 py-2 border rounded" rows="3" required></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Prix EUR *</label>
+                        <input type="number" id="product-price-eur" class="w-full px-3 py-2 border rounded" step="0.01" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Prix XAF *</label>
+                        <input type="number" id="product-price-xaf" class="w-full px-3 py-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Section</label>
+                        <select id="product-section" class="w-full px-3 py-2 border rounded">
+                            <option value="normal">Normal</option>
+                            <option value="dollar">Offre 1€</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Image URL *</label>
+                        <input type="url" id="product-image" class="w-full px-3 py-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Lien Selar *</label>
+                        <input type="url" id="product-selar-link" class="w-full px-3 py-2 border rounded" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Catégorie détectée</label>
+                    <div class="flex items-center gap-2">
+                        <span id="detected-category" class="category-badge">-</span>
+                        <button type="button" id="edit-category-btn" class="text-blue-600 text-sm">Modifier</button>
+                    </div>
+                    <select id="product-category" class="w-full px-3 py-2 border rounded mt-2 hidden">
+                        <!-- Options chargées dynamiquement -->
+                    </select>
+                </div>
+
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" id="cancel-product-btn" class="btn-secondary">Annuler</button>
+                    <button type="submit" class="btn-primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Annonce -->
+    <div id="announcement-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 class="text-xl font-bold mb-4" id="announcement-modal-title">Nouvelle annonce</h3>
+            <form id="announcement-form" class="space-y-4">
+                <input type="hidden" id="announcement-id">
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Titre *</label>
+                    <input type="text" id="announcement-title" class="w-full px-3 py-2 border rounded" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Message *</label>
+                    <textarea id="announcement-message" class="w-full px-3 py-2 border rounded" rows="3" required></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Type</label>
+                        <select id="announcement-type" class="w-full px-3 py-2 border rounded">
+                            <option value="future_product">Produit futur</option>
+                            <option value="special_offer">Offre spéciale</option>
+                            <option value="promotion">Promotion</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Priorité</label>
+                        <input type="number" id="announcement-priority" class="w-full px-3 py-2 border rounded" min="1" max="10" value="1">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Lien Tally</label>
+                    <input type="url" id="announcement-tally-link" class="w-full px-3 py-2 border rounded">
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="announcement-active" class="rounded">
+                    <label class="text-sm font-medium">Annonce active</label>
+                </div>
+
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" id="cancel-announcement-btn" class="btn-secondary">Annuler</button>
+                    <button type="submit" class="btn-primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

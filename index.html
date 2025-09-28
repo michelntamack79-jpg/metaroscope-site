@@ -1,0 +1,233 @@
+
+## 2. Fichier index.html (site public)
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaroscope - Ebooks & Templates Premium</title>
+    <meta name="description" content="Metaroscope - Solutions premium pour automatisation et transformation digitale. Satisfait ou remboursé sous 14 jours.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header id="header" class="header py-4 fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#accueil" class="text-2xl font-bold gradient-text flex items-center gap-3">
+                <img src="https://imgur.com/ocDKtOS.png" alt="Metaroscope Logo" class="w-12 h-12 rounded-xl object-cover" loading="lazy">
+                Metaroscope
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#accueil" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">Accueil</a>
+                <a href="#dollar" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">Offres 1€</a>
+                <a href="#ebooks" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">Ebooks</a>
+                <a href="#templates" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">Templates</a>
+                <a href="#faq" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">FAQ</a>
+                <a href="#contact" class="text-gray-600 font-normal hover:text-gray-900 transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center gap-4 md:hidden">
+                <button id="mobile-menu-toggle" class="text-gray-600" aria-label="Ouvrir le menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden glass-card absolute top-full left-0 right-0 py-4 hidden">
+            <div class="container mx-auto px-4 flex flex-col space-y-4">
+                <a href="#accueil" class="text-gray-600 font-normal py-2">Accueil</a>
+                <a href="#dollar" class="text-gray-600 font-normal py-2">Offres 1€</a>
+                <a href="#ebooks" class="text-gray-600 font-normal py-2">Ebooks</a>
+                <a href="#templates" class="text-gray-600 font-normal py-2">Templates</a>
+                <a href="#faq" class="text-gray-600 font-normal py-2">FAQ</a>
+                <a href="#contact" class="text-gray-600 font-normal py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="pt-32 pb-20 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">Metaroscope</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
+                Transformez votre vision en réalité
+            </p>
+            <p class="text-lg text-gray-500 max-w-xl mx-auto mb-10">
+                Satisfait ou remboursé sous 14 jours
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
+                <a href="#dollar" class="btn-primary font-normal py-4 px-8 rounded-lg inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-star"></i>
+                    Découvrir les Offres 1€
+                </a>
+                <a href="#ebooks" class="btn-secondary font-normal py-4 px-8 rounded-lg inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-book"></i>
+                    Voir les Ebooks
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto hero-counters">
+                <div class="glass-card p-6 rounded-lg relative slide-in">
+                    <div class="text-3xl font-bold text-gray-900 mb-2" id="total-sales">247</div>
+                    <div class="text-gray-600 font-normal">Produits Vendus</div>
+                </div>
+                <div class="glass-card p-6 rounded-lg relative slide-in" style="animation-delay: 0.1s;">
+                    <div class="text-3xl font-bold text-gray-900 mb-2">4.9/5</div>
+                    <div class="text-gray-600 font-normal">Satisfaction Client</div>
+                </div>
+                <div class="glass-card p-6 rounded-lg relative slide-in" style="animation-delay: 0.2s;">
+                    <div class="text-3xl font-bold text-gray-900 mb-2" id="online-users">12</div>
+                    <div class="text-gray-600 font-normal">En ligne maintenant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dollar Section -->
+    <section id="dollar" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center section-title">Offres à 1€ - Quantité Limitée</h2>
+            <p class="text-xl text-center text-gray-600 mb-12">Solutions premium à prix exceptionnel - Satisfait ou remboursé</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="dollar-products">
+                <!-- Produits chargés dynamiquement -->
+            </div>
+            <div class="pagination" id="dollar-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Ebooks Section -->
+    <section id="ebooks" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center section-title">Ebooks Premium</h2>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                <div class="flex flex-wrap justify-center gap-4" id="ebook-filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="ia">IA</button>
+                    <button class="filter-btn" data-filter="marketing">Marketing</button>
+                    <button class="filter-btn" data-filter="business">Business</button>
+                    <button class="filter-btn" data-filter="tech">Tech</button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="ebook-search" placeholder="Rechercher un ebook..." class="search-input">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="ebook-products">
+                <!-- Produits chargés dynamiquement -->
+            </div>
+            <div class="pagination" id="ebook-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section id="templates" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center section-title">Templates Professionnels</h2>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                <div class="flex flex-wrap justify-center gap-4" id="template-filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="landing">Landing Pages</button>
+                    <button class="filter-btn" data-filter="site">Sites Web</button>
+                    <button class="filter-btn" data-filter="application">Applications</button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="template-search" placeholder="Rechercher un template..." class="search-input">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="template-products">
+                <!-- Produits chargés dynamiquement -->
+            </div>
+            <div class="pagination" id="template-pagination"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center section-title">Questions Fréquentes</h2>
+            <div class="max-w-3xl mx-auto" id="faq-list">
+                <!-- FAQ chargée dynamiquement -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4 section-title">Contactez-nous</h2>
+            <p class="text-xl text-gray-600 mb-12">Une question ? Un projet ? Nous sommes là pour vous accompagner vers le succès</p>
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="https://wa.me/237654931313" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    WhatsApp
+                </a>
+                <a href="https://t.me/AIBuck" target="_blank" rel="noopener noreferrer" class="btn-secondary inline-flex items-center justify-center gap-2">
+                    <i class="fab fa-telegram text-xl"></i>
+                    Telegram
+                </a>
+                <a href="https://tally.so/r/3XjaAO" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-envelope text-xl"></i>
+                    Contact & Devis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-gray-900 font-bold mb-4">Metaroscope</h4>
+                    <p class="text-gray-600">Transformez votre vision en réalité. Solutions premium pour automatisation et transformation digitale.</p>
+                </div>
+                <div>
+                    <h4 class="text-gray-900 font-bold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#dollar" class="text-gray-600 hover:text-gray-900 transition-colors">Offres 1€</a></li>
+                        <li><a href="#ebooks" class="text-gray-600 hover:text-gray-900 transition-colors">Ebooks</a></li>
+                        <li><a href="#templates" class="text-gray-600 hover:text-gray-900 transition-colors">Templates</a></li>
+                        <li><a href="#faq" class="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-gray-900 font-bold mb-4">Suivez-nous</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-border-gray pt-8 text-center text-gray-600">
+                <p>&copy; 2024 Metaroscope. Tous droits réservés. 🚀 Votre vision, notre mission.</p>
+                <p class="mt-2 text-sm">Paiement sécurisé via Selar — Satisfait ou remboursé sous 14 jours</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Popup Annonces -->
+    <div id="announcement-popup" class="announcement-popup hidden">
+        <div class="announcement-content">
+            <button id="close-announcement" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="announcement-title"></h3>
+            <p id="announcement-message"></p>
+            <a id="announcement-link" href="#" target="_blank" class="btn-primary mt-4">
+                Voir l'offre <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
